@@ -11,17 +11,6 @@
   td {
     border: 1px solid $table_secondary_color;
 
-    figure {
-      display: inline;
-      margin: 0;
-
-      &:hover {
-        svg path {
-          fill: $tooltip_bg;
-        }
-      }
-    }
-
     &.#{$prefix}-center {
       text-align: center;
     }
@@ -36,6 +25,19 @@
   tbody tr {
     &:nth-of-type(even) {
       background-color: $table_secondary_color;
+    }
+  }
+}
+
+.#{$prefix}-icon {
+  display: inline;
+  margin: 0;
+
+  &:hover {
+    cursor: pointer;
+
+    svg path {
+      fill: $tooltip_bg;
     }
   }
 }

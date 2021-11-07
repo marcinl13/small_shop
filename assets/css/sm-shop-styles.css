@@ -68,17 +68,6 @@
   border: 1px solid #ddd;
 }
 
-.sm-shop-table th figure,
-.sm-shop-table td figure {
-  display: inline;
-  margin: 0;
-}
-
-.sm-shop-table th figure:hover svg path,
-.sm-shop-table td figure:hover svg path {
-  fill: #ff4500;
-}
-
 .sm-shop-table th.sm-shop-center,
 .sm-shop-table td.sm-shop-center {
   text-align: center;
@@ -91,4 +80,17 @@
 
 .sm-shop-table tbody tr:nth-of-type(even) {
   background-color: #ddd;
+}
+
+.sm-shop-icon {
+  display: inline;
+  margin: 0;
+}
+
+.sm-shop-icon:hover {
+  cursor: pointer;
+}
+
+.sm-shop-icon:hover svg path {
+  fill: #ff4500;
 }

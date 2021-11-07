@@ -34,6 +34,8 @@ define( 'SMALL_SHOP__PLUGIN_TEMPLATES', SMALL_SHOP__PLUGIN_DIR . 'views/' );
 define( 'SMALL_SHOP__PLUGIN_TEMPLATES_ADMIN', SMALL_SHOP__PLUGIN_DIR . 'views/admin/' );
 
 define( 'SMALL_SHOP__PLUGIN_ASSETS', SMALL_SHOP__PLUGIN_DIR . 'assets/' );
+define( 'SMALL_SHOP__PLUGIN_ICONS', SMALL_SHOP__PLUGIN_ASSETS . 'icons/' );
+
 define( 'SMALL_SHOP__PLUGIN_JS', SMALL_SHOP__PLUGIN_ASSETS . 'js/' );
 define( 'SMALL_SHOP__PLUGIN_CSS', SMALL_SHOP__PLUGIN_ASSETS . 'css/' );
 
@@ -42,6 +44,7 @@ register_activation_hook( __FILE__, array( 'SMALL_SHOP', 'plugin_activation' ) )
 register_deactivation_hook( __FILE__, array( 'SMALL_SHOP', 'plugin_deactivation' ) );
 
 require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShopTranslation.php' );
+require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShopIcon.php' );
 require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShop.php' );
 require_once( SMALL_SHOP__PLUGIN_API . 'SmallShopApi.php' );
 

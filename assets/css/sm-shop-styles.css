@@ -1,0 +1,94 @@
+[data-tooltip] {
+  position: relative;
+  color: #ff4500;
+  text-decoration: none;
+}
+
+[data-tooltip]:hover:before, [data-tooltip]:focus:before {
+  opacity: 1;
+  transform: translate(-50%, -10px);
+}
+
+[data-tooltip]:hover:after, [data-tooltip]:focus:after {
+  opacity: 1;
+  transform: translate(-50%, -10px) rotate(45deg);
+}
+
+[data-tooltip]:before {
+  position: absolute;
+  z-index: 2;
+  white-space: nowrap;
+  content: attr(data-tooltip);
+  bottom: 100%;
+  left: 50%;
+  padding: 0.5em 1em;
+  color: white;
+  font-size: 0.8em;
+  line-height: 1.7em;
+  background-color: #ff4500;
+  transition: transform 0.2s ease-out;
+  opacity: 0;
+  transform: translate(-50%, 0);
+  pointer-events: none;
+  border-radius: 4px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+[data-tooltip]:after {
+  position: absolute;
+  z-index: 3;
+  display: block;
+  bottom: 100%;
+  left: 50%;
+  content: "";
+  width: 10px;
+  height: 10px;
+  background-color: #ff4500;
+  margin-bottom: -4px;
+  transform: translate(-50%, 0) rotate(45deg);
+  transition: transform 0.2s ease-out;
+  opacity: 0;
+  pointer-events: none;
+}
+
+[data-tooltip].break:before {
+  white-space: normal;
+  width: 360px;
+}
+
+.sm-shop-table {
+  width: 100%;
+  background-color: #fff;
+  border-collapse: collapse;
+  border-radius: 1em;
+}
+
+.sm-shop-table th,
+.sm-shop-table td {
+  border: 1px solid #ddd;
+}
+
+.sm-shop-table th figure,
+.sm-shop-table td figure {
+  display: inline;
+  margin: 0;
+}
+
+.sm-shop-table th figure:hover svg path,
+.sm-shop-table td figure:hover svg path {
+  fill: #ff4500;
+}
+
+.sm-shop-table th.sm-shop-center,
+.sm-shop-table td.sm-shop-center {
+  text-align: center;
+}
+
+.sm-shop-table th .sm-shop-action:hover,
+.sm-shop-table td .sm-shop-action:hover {
+  cursor: pointer;
+}
+
+.sm-shop-table tbody tr:nth-of-type(even) {
+  background-color: #ddd;
+}

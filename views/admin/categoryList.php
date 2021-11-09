@@ -1,12 +1,9 @@
 <div style="padding-right: 3rem; margin-top: 3rem">
   <div x-data="getData()" x-init="fetchData()">
-    <div style="float: right;">
-      <figure
-        class="sm-shop-icon"
-        x-on:click="addCategory()"
-        data-tooltip="<?php echo SmallShopTranslation::translate('Category_add'); ?>"
-      >
-        <?php echo SmallShopIcon::add() ?>
+    <div class="sm-shop-filters">
+      <figure class="sm-shop-icon" x-on:click="addCategory()"
+        data-tooltip="<?php echo SmallShopTranslation::translate('Category_add'); ?>">
+        <?php echo SmallShopIcon::add(SmallShopIconSize::ICON_24) ?>
       </figure>
     </div>
 
@@ -22,19 +19,13 @@
           <tr>
             <td x-text="category.name"></td>
             <td class="sm-shop-center">
-              <figure
-                class="sm-shop-icon"
-                x-on:click="edtCategory(category.id)"
-                data-tooltip="<?php echo SmallShopTranslation::translate('Category_edit'); ?>"
-              >
+              <figure class="sm-shop-icon" x-on:click="edtCategory(category.id)"
+                data-tooltip="<?php echo SmallShopTranslation::translate('Category_edit'); ?>">
                 <?php echo SmallShopIcon::edit() ?>
               </figure>
 
-              <figure
-                class="sm-shop-icon"
-                x-on:click="delCategory(category.id)"
-                data-tooltip="<?php echo SmallShopTranslation::translate('Category_delete'); ?>"
-              >
+              <figure class="sm-shop-icon" x-on:click="delCategory(category.id)"
+                data-tooltip="<?php echo SmallShopTranslation::translate('Category_delete'); ?>">
                 <?php echo SmallShopIcon::delete() ?>
               </figure>
             </td>

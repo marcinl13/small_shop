@@ -82,8 +82,14 @@
   background-color: #ddd;
 }
 
+.sm-shop-filters {
+  display: flex;
+  justify-content: end;
+  margin: 1em;
+}
+
 .sm-shop-icon {
-  display: inline;
+  display: inline-block;
   margin: 0;
 }
 

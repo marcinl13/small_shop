@@ -3,6 +3,7 @@
 abstract class SmallShopIconSize
 {
     public const ICON_16 = '16';
+    public const ICON_24 = '24';
 }
 
 class SmallShopIcon
@@ -39,7 +40,9 @@ class SmallShopIcon
     {
         switch ($size) {
             case SmallShopIconSize::ICON_16:
-                return SmallShopIconSize::ICON_16; 
+                return SmallShopIconSize::ICON_16;
+            case SmallShopIconSize::ICON_24:
+                return SmallShopIconSize::ICON_24;
             default:
                 return SmallShopIconSize::ICON_16; 
         }

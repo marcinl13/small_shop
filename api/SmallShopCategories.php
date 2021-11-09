@@ -44,7 +44,7 @@ class SmallShopCategories implements API
             } 
         ), true );
         
-        register_rest_route('wp/v2/sm-shop', '/updateCategory', array(
+        register_rest_route('wp/v2/sm-shop', '/updateCategory/(?P<id>\d+)', array(
             'methods' => 'PUT',
             'callback' => function($request) {
                 return $this->update($request);
@@ -61,7 +61,8 @@ class SmallShopCategories implements API
 
         return $result; 
     }
-
+    
+    // TODO: return message + refactor + translations
     public function add(\WP_REST_Request $request)
     {
         $params = $request->get_body();
@@ -80,7 +81,7 @@ class SmallShopCategories implements API
         return new \WP_REST_Response($insertID, 201); 
     }
 
-    // TODO: return message
+    // TODO: return message + refactor + translations
     public function delete(\WP_REST_Request $request)
     {
         $params = $request->get_body();
@@ -97,21 +98,29 @@ class SmallShopCategories implements API
         $deleted = $this->db->delete(self::TABLE, $data, ['%d']);
     }
 
-    // TODO: create update
+    // TODO: refactor + translations
     public function update(\WP_REST_Request $request)
     {
-        $data = [
-            'column1' => 'value1',   // string
-            'column2' => 'value2'    // integer (number) 
-        ];
+        $id = $request->get_param('id') ?? null;
+        if (!isset($id)) {
+            return new \WP_REST_Response('no id provided', 500);
+        }
 
-        $format = ['%s', '%d'];
+        $params = $request->get_body();
+        $params = json_decode($params, true);
+        $name = $params['name'] ?? null;
+        
+        if (!isset($name)) {
+            return new \WP_REST_Response('no name provided', 500);
+        }
 
-        $where = ['id' => 6];
-        $whereFormat = ['%d'];
+        $data = ['name' => $name];
+        $where = ['id' => $id];
 
-        $this->db->update(self::TABLE, $data, $where, $format, $whereFormat);
+        if($this->db->update(self::TABLE, $data, $where)){
+            return new \WP_REST_Response('updated', 200); 
+        }
+
+        return new \WP_REST_Response('oops something goeas wrong!!', 500); 
     }
-
-    // save product
 }

@@ -29,8 +29,14 @@
   }
 }
 
+.#{$prefix}-filters {
+  display: flex;
+  justify-content: end;
+  margin: 1em;
+}
+
 .#{$prefix}-icon {
-  display: inline;
+  display: inline-block;
   margin: 0;
 
   &:hover {

@@ -1,0 +1,28 @@
+.#{$prefix}-table {
+    width: 100%;
+    background-color: #fff;
+    border-collapse: collapse;
+    border-radius: 1em;
+  
+    th,
+    td {
+      border: 1px solid $table_secondary_color;
+  
+      &.#{$prefix}-center {
+        text-align: center;
+      }
+  
+      .#{$prefix}-action {
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+  
+    tbody tr {
+      &:nth-of-type(even) {
+        background-color: $table_secondary_color;
+      }
+    }
+  }
+  

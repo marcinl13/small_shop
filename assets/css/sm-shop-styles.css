@@ -100,3 +100,11 @@
 .sm-shop-icon:hover svg path {
   fill: #ff4500;
 }
+
+.sm-shop-paginate {
+  margin: 1em 0;
+}
+
+.sm-shop-paginate span {
+  margin: 0 0.25rem;
+}

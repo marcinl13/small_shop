@@ -53,17 +53,29 @@ class SmallShopCategories implements API
     }
 
     
-    public function list(\WP_REST_Request $request)
+    public function list(\WP_REST_Request $request): \WP_REST_Response
     {
-        $query = sprintf("select id, name from %s limit %d;", self::TABLE, 10);
+        $q = $request->get_param('q');
+        $limit = $request->get_param('perPage') ?? 5;
+        $page = $request->get_param('page') ?? 1;
 
-        $result = $this->db->get_results($query, ARRAY_A);
+        $query = sprintf("select id, name from %s;", self::TABLE);
+        $total = count($this->db->get_results($query));
 
-        return $result; 
+        $query = sprintf("select id, name from %s limit %d, %d;", self::TABLE, ($page - 1) * $limit, $limit);
+        $result = $this->db->get_results($query);
+        $last = ceil($total/$limit);
+        
+        return new \WP_REST_Response([
+            'page' => (int) $page,
+            'last' => (int) $last,
+            'total' => (int) $total,
+            'result' => $result
+        ], 200);
     }
     
     // TODO: return message + refactor + translations
-    public function add(\WP_REST_Request $request)
+    public function add(\WP_REST_Request $request): \WP_REST_Response
     {
         $params = $request->get_body();
         $params = json_decode($params, true);
@@ -82,7 +94,7 @@ class SmallShopCategories implements API
     }
 
     // TODO: return message + refactor + translations
-    public function delete(\WP_REST_Request $request)
+    public function delete(\WP_REST_Request $request): \WP_REST_Response
     {
         $params = $request->get_body();
         $params = json_decode($params, true);
@@ -99,7 +111,7 @@ class SmallShopCategories implements API
     }
 
     // TODO: refactor + translations
-    public function update(\WP_REST_Request $request)
+    public function update(\WP_REST_Request $request): \WP_REST_Response
     {
         $id = $request->get_param('id') ?? null;
         if (!isset($id)) {

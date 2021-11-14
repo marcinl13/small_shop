@@ -52,7 +52,6 @@ class SmallShopCategories implements API
         ), true );
     }
 
-    
     public function list(\WP_REST_Request $request): \WP_REST_Response
     {
         $q = $request->get_param('q') ?? null;

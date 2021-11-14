@@ -1,6 +1,8 @@
 .#{$prefix}-paginate {
   margin: 1em 0;
-
+  display: flex;
+  justify-content: center;
+  
   span {
     margin: 0 0.25rem;
   }

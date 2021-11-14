@@ -8,7 +8,7 @@
         </template>
       </select>
 
-      <input type="text" id="search" name="search" placeholder="Search category" x-model="searchValue" x-on:keyup.enter="fetchData()">
+      <input type="text" id="search" name="search" placeholder="<?php echo SmallShopTranslation::translate('Search'); ?>" x-model="searchValue" x-on:keyup.enter="fetchData()">
 
       <figure class="sm-shop-icon" x-on:click="addCategory()"
         data-tooltip="<?php echo SmallShopTranslation::translate('Category_add'); ?>">
@@ -28,7 +28,7 @@
           <tr>
             <td x-text="category.name"></td>
             <td class="sm-shop-center">
-              <figure class="sm-shop-icon" x-on:click="edtCategory(category.id)"
+              <figure class="sm-shop-icon" x-on:click="edtCategory(category.id, category.name)"
                 data-tooltip="<?php echo SmallShopTranslation::translate('Category_edit'); ?>">
                 <?php echo SmallShopIcon::edit() ?>
               </figure>
@@ -43,7 +43,7 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="2" style="text-align: center;">Brak wyników.</td>
+          <td colspan="2" style="text-align: center;"><?php echo SmallShopTranslation::translate('No results'); ?>.</td>
         </tr>
       </tfoot>
     </table>
@@ -124,6 +124,7 @@
           title: "<?php echo SmallShopTranslation::translate('Category_add'); ?>",
           input: "text",
           showCancelButton: true,
+          confirmButtonColor: '#ff4500',
           confirmButtonText: "<?php echo SmallShopTranslation::translate('Category_add'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {
@@ -155,13 +156,12 @@
       },
       delCategory(_categoyId) {
         Swal.fire({
-          title: "Are you sure?",
-          text: "You won't be able to revert this!",
+          title: "<?php echo SmallShopTranslation::translate('Are you sure?'); ?>",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "Yes, delete it!",
-          cancelButtonText: "No, cancel!",
-          reverseButtons: true,
+          confirmButtonText: "<?php echo SmallShopTranslation::translate('Yes'); ?>",
+          cancelButtonText: "<?php echo SmallShopTranslation::translate('No'); ?>",
+          confirmButtonColor: '#ff4500',
         }).then((result) => {
           if (result.isConfirmed) {
             fetch("<?php echo get_rest_url(null, SmallShopCategories::ROUTE_DELETE); ?>", {
@@ -176,11 +176,13 @@
           }
         });
       },
-      edtCategory(_categoyId) {
+      edtCategory(_categoyId, _val) {
         Swal.fire({
           title: "<?php echo SmallShopTranslation::translate('Category_edit'); ?>",
           input: "text",
+          inputValue: _val,
           showCancelButton: true,
+          confirmButtonColor: '#ff4500',
           confirmButtonText: "<?php echo SmallShopTranslation::translate('Category_edit'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {

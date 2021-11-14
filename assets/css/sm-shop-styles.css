@@ -84,7 +84,7 @@
 
 .sm-shop-filters {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   margin: 1em;
 }
 
@@ -107,6 +107,8 @@
 
 .sm-shop-paginate {
   margin: 1em 0;
+  display: flex;
+  justify-content: center;
 }
 
 .sm-shop-paginate span {

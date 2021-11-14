@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: SMALL SHOP\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-11-06 09:42+0000\n"
-"PO-Revision-Date: 2021-11-06 10:53+0000\n"
+"PO-Revision-Date: 2021-11-14 13:17+0000\n"
 "Last-Translator: \n"
 "Language-Team: Polski\n"
 "Language: pl_PL\n"
@@ -16,11 +16,20 @@ msgstr ""
 "X-Loco-Version: 2.5.5; wp-5.8.1\n"
 "X-Domain: small_shop"
 
+msgid "Add"
+msgstr "Dodaj"
+
+msgid "Are you sure?"
+msgstr "Czy jesteś pewien?"
+
+msgid "Cancel"
+msgstr "Cofnij"
+
 msgid "Categories"
 msgstr "Kategorie"
 
 msgid "Category name"
-msgstr ""
+msgstr "nazwa"
 
 msgid "Category_add"
 msgstr "Dodaj kategorię"
@@ -34,9 +43,30 @@ msgstr "Edytuj kategorie"
 msgid "Category_name"
 msgstr "Nazwa"
 
+msgid "Delete"
+msgstr "Usuń"
+
+msgid "Edit"
+msgstr "Edytuj"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "No results"
+msgstr "Brak wyników"
+
 msgid "Products"
 msgstr "Produkty"
+
+msgid "Save"
+msgstr "Zapisz"
+
+msgid "Search"
+msgstr "Szukaj"
 
 #. Description of the plugin
 msgid "small shop for Wordpress."
 msgstr "small shop for Wordpress."
+
+msgid "Yes"
+msgstr "Tak"

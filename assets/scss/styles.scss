@@ -10,8 +10,12 @@
 }
 
 .#{$prefix}-icon {
-  display: inline-block;
+  display: inline-flex;
   margin: 0;
+
+  svg {
+    margin: auto;
+  }
 
   &:hover {
     cursor: pointer;
@@ -21,5 +25,16 @@
     }
   }
 }
+
+// .#{$prefix}-search-wrapper {
+//   display: inline-flex;
+//   align-items: center;
+
+//   figure {
+//     background-color: #ddd;
+//     border: 1px solid #000;
+//     margin: 0;
+//   }
+// }
 
 @import "./pagination.scss";

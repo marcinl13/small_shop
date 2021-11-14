@@ -89,8 +89,12 @@
 }
 
 .sm-shop-icon {
-  display: inline-block;
+  display: inline-flex;
   margin: 0;
+}
+
+.sm-shop-icon svg {
+  margin: auto;
 }
 
 .sm-shop-icon:hover {

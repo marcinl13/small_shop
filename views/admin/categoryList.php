@@ -8,6 +8,8 @@
         </template>
       </select>
 
+      <input type="text" id="search" name="search" placeholder="Search category" x-model="searchValue" x-on:keyup.enter="fetchData()">
+
       <figure class="sm-shop-icon" x-on:click="addCategory()"
         data-tooltip="<?php echo SmallShopTranslation::translate('Category_add'); ?>">
         <?php echo SmallShopIcon::add(SmallShopIconSize::ICON_24) ?>
@@ -39,6 +41,11 @@
           </tr>
         </template>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2" style="text-align: center;">Brak wyników.</td>
+        </tr>
+      </tfoot>
     </table>
 
     <div class="sm-shop-paginate">
@@ -81,7 +88,6 @@
             this.categories = data.result;
             this.page = data.page;
             this.lastPage = data.last;
-            this.total = data.total;
           });
       },
       updateAmountShownRows(_amount) {

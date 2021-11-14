@@ -15,7 +15,6 @@
         <?php echo SmallShopIcon::add(SmallShopIconSize::ICON_24) ?>
       </figure>
     </div>
-
     <table class="sm-shop-table sm-shop-table-grid-categories">
       <thead>
         <th>
@@ -42,7 +41,7 @@
         </template>
       </tbody>
       <tfoot>
-        <tr>
+        <tr x-show="categories.length == 0">
           <td colspan="2" style="text-align: center;"><?php echo SmallShopTranslation::translate('No results'); ?>.</td>
         </tr>
       </tfoot>
@@ -62,7 +61,7 @@
       searchValue: "",
       isLoading: false,
 
-      categories: null,
+      categories: [],
       newCategory: null,
 
       page: 1,
@@ -85,7 +84,9 @@
           .then((res) => res.json())
           .then((data) => {
             this.isLoading = false;
+            
             this.categories = data.result;
+
             this.page = data.page;
             this.lastPage = data.last;
           });

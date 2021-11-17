@@ -1,28 +1,41 @@
-.#{$prefix}-table {
-    width: 100%;
-    background-color: #fff;
-    border-collapse: collapse;
-    border-radius: 1em;
-  
-    th,
+@import "./variables.scss";
+
+.sm-shop-table {
+  display: grid;
+  background-color: #fff;
+  border-collapse: collapse;
+
+  thead tr,
+  tbody tr {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+  }
+
+  thead th {
+    &:not(:last-child) {
+      border-right: 1px solid $table_border;
+    }
+
+    border-bottom: 1px solid $table_border;
+  }
+
+  tbody tr {
     td {
-      border: 1px solid $table_secondary_color;
-  
-      &.#{$prefix}-center {
-        text-align: center;
+      &:not(:last-child) {
+        border-right: 1px solid $table_border;
       }
-  
-      .#{$prefix}-action {
-        &:hover {
-          cursor: pointer;
-        }
+
+      border-bottom: 1px solid $table_border;
+    }
+
+    &:last-child {
+      td {
+        border-bottom: unset;
       }
     }
-  
-    tbody tr {
-      &:nth-of-type(even) {
-        background-color: $table_secondary_color;
-      }
+
+    &:nth-of-type(odd) {
+      background-color: $table_secondary_color;
     }
   }
-  
+}

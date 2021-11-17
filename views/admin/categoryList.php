@@ -15,7 +15,8 @@
         <?php echo SmallShopIcon::add(SmallShopIconSize::ICON_24) ?>
       </figure>
     </div>
-    <table class="sm-shop-table sm-shop-table-grid-categories">
+    
+    <table class="sm-shop-table">
       <thead>
         <th>
           <?php echo SmallShopTranslation::translate('Category_name'); ?>

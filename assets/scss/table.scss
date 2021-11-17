@@ -1,0 +1,41 @@
+@import "./variables.scss";
+
+.sm-shop-table {
+  display: grid;
+  background-color: #fff;
+  border-collapse: collapse;
+
+  thead tr,
+  tbody tr {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+  }
+
+  thead th {
+    &:not(:last-child) {
+      border-right: 1px solid $table_border;
+    }
+
+    border-bottom: 1px solid $table_border;
+  }
+
+  tbody tr {
+    td {
+      &:not(:last-child) {
+        border-right: 1px solid $table_border;
+      }
+
+      border-bottom: 1px solid $table_border;
+    }
+
+    &:last-child {
+      td {
+        border-bottom: unset;
+      }
+    }
+
+    &:nth-of-type(odd) {
+      background-color: $table_secondary_color;
+    }
+  }
+}

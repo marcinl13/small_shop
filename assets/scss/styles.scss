@@ -1,43 +1,21 @@
 @import "./variables.scss";
 @import "./tooltips.scss";
 
-.#{$prefix}-table {
-  width: 100%;
-  background-color: #fff;
-  border-collapse: collapse;
-  border-radius: 1em;
-
-  th,
-  td {
-    border: 1px solid $table_secondary_color;
-
-    &.#{$prefix}-center {
-      text-align: center;
-    }
-
-    .#{$prefix}-action {
-      &:hover {
-        cursor: pointer;
-      }
-    }
-  }
-
-  tbody tr {
-    &:nth-of-type(even) {
-      background-color: $table_secondary_color;
-    }
-  }
-}
+@import "./table.scss";
 
 .#{$prefix}-filters {
   display: flex;
-  justify-content: end;
+  justify-content: space-between;
   margin: 1em;
 }
 
 .#{$prefix}-icon {
-  display: inline-block;
+  display: inline-flex;
   margin: 0;
+
+  svg {
+    margin: auto;
+  }
 
   &:hover {
     cursor: pointer;
@@ -47,3 +25,16 @@
     }
   }
 }
+
+// .#{$prefix}-search-wrapper {
+//   display: inline-flex;
+//   align-items: center;
+
+//   figure {
+//     background-color: #ddd;
+//     border: 1px solid #000;
+//     margin: 0;
+//   }
+// }
+
+@import "./pagination.scss";

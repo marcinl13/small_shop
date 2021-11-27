@@ -1,5 +1,7 @@
 <?php
 
+namespace API;
+
 require_once "SmallShopCategories.php";
 
 class SmallShopAPI 

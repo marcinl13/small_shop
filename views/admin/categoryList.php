@@ -1,3 +1,11 @@
+<?php
+use API\SmallShopCategories;
+use Icon\Icon;
+use Icon\IconSize;
+use Translation\I18n;
+
+?>
+
 <div style="padding-right: 3rem; margin-top: 3rem">
   <div x-data="getData()" x-init="fetchData()">
     <div class="sm-shop-filters">
@@ -8,18 +16,18 @@
         </template>
       </select>
 
-      <input type="text" id="search" name="search" placeholder="<?php echo SmallShopTranslation::translate('Search'); ?>" x-model="searchValue" x-on:keyup.enter="fetchData()">
+      <input type="text" id="search" name="search" placeholder="<?php echo I18n::translate('Search'); ?>" x-model="searchValue" x-on:keyup.enter="fetchData()">
 
       <figure class="sm-shop-icon" x-on:click="addCategory()"
-        data-tooltip="<?php echo SmallShopTranslation::translate('Category_add'); ?>">
-        <?php echo SmallShopIcon::add(SmallShopIconSize::ICON_24) ?>
+        data-tooltip="<?php echo I18n::translate('Category_add'); ?>">
+        <?php echo Icon::add(IconSize::ICON_24) ?>
       </figure>
     </div>
     
     <table class="sm-shop-table">
       <thead>
         <th>
-          <?php echo SmallShopTranslation::translate('Category_name'); ?>
+          <?php echo I18n::translate('Category_name'); ?>
         </th>
         <th></th>
       </thead>
@@ -29,13 +37,13 @@
             <td x-text="category.name"></td>
             <td class="sm-shop-center">
               <figure class="sm-shop-icon" x-on:click="edtCategory(category.id, category.name)"
-                data-tooltip="<?php echo SmallShopTranslation::translate('Category_edit'); ?>">
-                <?php echo SmallShopIcon::edit() ?>
+                data-tooltip="<?php echo I18n::translate('Category_edit'); ?>">
+                <?php echo Icon::edit() ?>
               </figure>
 
               <figure class="sm-shop-icon" x-on:click="delCategory(category.id)"
-                data-tooltip="<?php echo SmallShopTranslation::translate('Category_delete'); ?>">
-                <?php echo SmallShopIcon::delete() ?>
+                data-tooltip="<?php echo I18n::translate('Category_delete'); ?>">
+                <?php echo Icon::delete() ?>
               </figure>
             </td>
           </tr>
@@ -43,7 +51,7 @@
       </tbody>
       <tfoot>
         <tr x-show="categories.length == 0">
-          <td colspan="2" style="text-align: center;"><?php echo SmallShopTranslation::translate('No results'); ?>.</td>
+          <td colspan="2" style="text-align: center;"><?php echo I18n::translate('No results'); ?>.</td>
         </tr>
       </tfoot>
     </table>
@@ -123,11 +131,11 @@
 
       addCategory() {
         Swal.fire({
-          title: "<?php echo SmallShopTranslation::translate('Category_add'); ?>",
+          title: "<?php echo I18n::translate('Category_add'); ?>",
           input: "text",
           showCancelButton: true,
           confirmButtonColor: '#ff4500',
-          confirmButtonText: "<?php echo SmallShopTranslation::translate('Category_add'); ?>",
+          confirmButtonText: "<?php echo I18n::translate('Category_add'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {
             if (!value) {
@@ -158,11 +166,11 @@
       },
       delCategory(_categoyId) {
         Swal.fire({
-          title: "<?php echo SmallShopTranslation::translate('Are you sure?'); ?>",
+          title: "<?php echo I18n::translate('Are you sure?'); ?>",
           icon: "warning",
           showCancelButton: true,
-          confirmButtonText: "<?php echo SmallShopTranslation::translate('Yes'); ?>",
-          cancelButtonText: "<?php echo SmallShopTranslation::translate('No'); ?>",
+          confirmButtonText: "<?php echo I18n::translate('Yes'); ?>",
+          cancelButtonText: "<?php echo I18n::translate('No'); ?>",
           confirmButtonColor: '#ff4500',
         }).then((result) => {
           if (result.isConfirmed) {
@@ -180,12 +188,12 @@
       },
       edtCategory(_categoyId, _val) {
         Swal.fire({
-          title: "<?php echo SmallShopTranslation::translate('Category_edit'); ?>",
+          title: "<?php echo I18n::translate('Category_edit'); ?>",
           input: "text",
           inputValue: _val,
           showCancelButton: true,
           confirmButtonColor: '#ff4500',
-          confirmButtonText: "<?php echo SmallShopTranslation::translate('Category_edit'); ?>",
+          confirmButtonText: "<?php echo I18n::translate('Category_edit'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {
             if (!value) {

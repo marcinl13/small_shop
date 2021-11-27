@@ -2,9 +2,10 @@
 
 namespace API;
 
-require_once "SmallShopCategories.php";
+require_once "endpoints/Categories.php";
+require_once "endpoints/Products.php";
 
-class SmallShopAPI 
+class Rest 
 {
     private static function getRestUrl()
     {
@@ -19,7 +20,10 @@ class SmallShopAPI
 			return false;
 		}
 
-        $endpoint = new SmallShopCategories();
+        $endpoint = new Categories();
+        $endpoint->register();
+
+        $endpoint = new Products();
         $endpoint->register();
     }
 }

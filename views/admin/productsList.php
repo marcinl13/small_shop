@@ -1,5 +1,6 @@
 <?php
-use API\Categories;
+
+use API\Products;
 use Icon\Icon;
 use Icon\IconSize;
 use Translation\I18n;
@@ -17,28 +18,34 @@ use Translation\I18n;
 
       <input type="text" id="search" name="search" placeholder="<?php echo I18n::translate('Search'); ?>" x-model="searchValue" x-on:keyup.enter="fetchData()">
 
-      <figure class="sm-shop-icon" x-on:click="addCategory()" data-tooltip="<?php echo I18n::translate('Category_add'); ?>">
+      <figure class="sm-shop-icon" x-on:click="addCategory()" data-tooltip="<?php echo I18n::translate('Product_add'); ?>">
         <?php echo Icon::add(IconSize::ICON_24) ?>
       </figure>
     </div>
     
-    <table class="sm-shop-table sm-shop-table-categories">
+    <table class="sm-shop-table sm-shop-table-products">
       <thead>
-        <th><?php echo I18n::translate('Category_name'); ?></th>
+        <th><?php echo I18n::translate('Image'); ?></th>
+        <th><?php echo I18n::translate('Name'); ?></th>
+        <th><?php echo I18n::translate('Price'); ?></th>
+        <th><?php echo I18n::translate('Category'); ?></th>
         <th></th>
       </thead>
       <tbody>
         <template x-for="category in categories" :key="category.id">
           <tr>
+            <td><img :src="category.image" width="80" height="80" alt="category.name"></td>
             <td x-text="category.name"></td>
+            <td class="text-bold" x-text="category.price + ' PLN'"></td>
+            <td x-text="category.category_name"></td>
             <td class="sm-shop-center">
               <figure class="sm-shop-icon" x-on:click="edtCategory(category.id, category.name)"
-                data-tooltip="<?php echo I18n::translate('Category_edit'); ?>">
+                data-tooltip="<?php echo I18n::translate('Product_edit'); ?>">
                 <?php echo Icon::edit() ?>
               </figure>
 
               <figure class="sm-shop-icon" x-on:click="delCategory(category.id)"
-                data-tooltip="<?php echo I18n::translate('Category_delete'); ?>">
+                data-tooltip="<?php echo I18n::translate('Product_delete'); ?>">
                 <?php echo Icon::delete() ?>
               </figure>
             </td>
@@ -79,7 +86,7 @@ use Translation\I18n;
       fetchData() {
         this.isLoading = true;
 
-        let prepareUrl = new URL("<?php echo get_rest_url(null, Categories::ROUTE_LIST); ?>");
+        let prepareUrl = new URL("<?php echo get_rest_url(null, Products::ROUTE_LIST); ?>");
         let params = prepareUrl.searchParams;
         params.append("q", this.searchValue);
         params.append("perPage", this.perPage.selected);
@@ -127,11 +134,11 @@ use Translation\I18n;
 
       addCategory() {
         Swal.fire({
-          title: "<?php echo I18n::translate('Category_add'); ?>",
+          title: "<?php echo I18n::translate('Product_add'); ?>",
           input: "text",
           showCancelButton: true,
           confirmButtonColor: '#ff4500',
-          confirmButtonText: "<?php echo I18n::translate('Category_add'); ?>",
+          confirmButtonText: "<?php echo I18n::translate('Product_add'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {
             if (!value) {
@@ -139,7 +146,7 @@ use Translation\I18n;
             }
           },
           preConfirm: (newName) => {
-            return fetch("<?php echo get_rest_url(null, Categories::ROUTE_ADD); ?>", {
+            return fetch("<?php echo get_rest_url(null, Products::ROUTE_ADD); ?>", {
               method: "POST",
               body: JSON.stringify({ name: newName }),
             })
@@ -170,7 +177,7 @@ use Translation\I18n;
           confirmButtonColor: '#ff4500',
         }).then((result) => {
           if (result.isConfirmed) {
-            fetch("<?php echo get_rest_url(null, Categories::ROUTE_DELETE); ?>", {
+            fetch("<?php echo get_rest_url(null, Products::ROUTE_DELETE); ?>", {
               method: "DELETE",
               body: JSON.stringify({ id: _categoyId }),
             }).then((res) => {
@@ -184,12 +191,12 @@ use Translation\I18n;
       },
       edtCategory(_categoyId, _val) {
         Swal.fire({
-          title: "<?php echo I18n::translate('Category_edit'); ?>",
+          title: "<?php echo I18n::translate('Product_edit'); ?>",
           input: "text",
           inputValue: _val,
           showCancelButton: true,
           confirmButtonColor: '#ff4500',
-          confirmButtonText: "<?php echo I18n::translate('Category_edit'); ?>",
+          confirmButtonText: "<?php echo I18n::translate('Product_edit'); ?>",
           showLoaderOnConfirm: true,
           inputValidator: (value) => {
             if (!value) {
@@ -197,7 +204,7 @@ use Translation\I18n;
             }
           },
           preConfirm: (newName) => {
-            return fetch("<?php echo get_rest_url(null, Categories::ROUTE_UPDATE); ?>" + `/${_categoyId}`, {
+            return fetch("<?php echo get_rest_url(null, Products::ROUTE_UPDATE); ?>" + `/${_categoyId}`, {
               method: "PUT",
               body: JSON.stringify({ name: newName }),
             })

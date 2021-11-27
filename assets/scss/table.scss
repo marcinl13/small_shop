@@ -1,6 +1,6 @@
 @import "./variables.scss";
 
-.sm-shop-table {
+.#{$prefix}-table {
   display: grid;
   background-color: #fff;
   border-collapse: collapse;
@@ -8,7 +8,7 @@
   thead tr,
   tbody tr {
     display: grid;
-    grid-template-columns: 8fr 4fr;
+    grid-template-columns: 6fr 6fr;
   }
 
   thead th {
@@ -40,6 +40,33 @@
   }
 }
 
-.sm-shop-center {
+.#{$prefix}-table-categories {
+  thead tr,
+  tbody tr {
+    display: grid;
+    grid-template-columns: 8fr 4fr;
+  }
+}
+
+.#{$prefix}-table-products {
+  thead tr,
+  tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 6fr 1fr 2fr 4fr;
+  }
+
+  td {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    &.text-bold {
+      font-weight: 700;
+    }
+  }
+}
+
+.#{$prefix}-center {
   text-align: center;
 }

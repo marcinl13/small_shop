@@ -16,7 +16,7 @@ Text Domain: small_shop
 namespace SmallShop;
 
 use Admin\SmallShopAdmin;
-use API\SmallShopAPI;
+use API\Rest;
 use Translation\I18n;
 
 // Make sure we don't expose any info if called directly
@@ -51,10 +51,10 @@ require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/I18n.php' );
 require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/Icon.php' );
 
 // require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShop.php' );
-require_once( SMALL_SHOP__PLUGIN_API . 'SmallShopApi.php' );
+require_once( SMALL_SHOP__PLUGIN_API . 'API.php' );
 
 add_action( 'init', array( I18n::class, 'loadTranslation' ) );
-add_action( 'rest_api_init', array( SmallShopAPI::class, 'init' ) );
+add_action( 'rest_api_init', array( Rest::class, 'init' ) );
 // add_action( 'init', array( SmallShop::class, 'init' ) );
 
 if ( is_admin() ) {

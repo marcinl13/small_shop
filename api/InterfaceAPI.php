@@ -1,5 +1,7 @@
 <?php
 
+namespace API;
+
 interface API
 {
     public function add(\WP_REST_Request $request): \WP_REST_Response;

@@ -13,6 +13,12 @@ License: MIT
 Text Domain: small_shop
 */
 
+namespace SmallShop;
+
+use Admin\SmallShopAdmin;
+use API\SmallShopAPI;
+use Translation\I18n;
+
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) ) {
 	echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
@@ -35,22 +41,21 @@ define( 'SMALL_SHOP__PLUGIN_TEMPLATES_ADMIN', SMALL_SHOP__PLUGIN_DIR . 'views/ad
 
 define( 'SMALL_SHOP__PLUGIN_ASSETS', SMALL_SHOP__PLUGIN_DIR . 'assets/' );
 define( 'SMALL_SHOP__PLUGIN_ICONS', SMALL_SHOP__PLUGIN_ASSETS . 'icons/' );
-
 define( 'SMALL_SHOP__PLUGIN_JS', SMALL_SHOP__PLUGIN_ASSETS . 'js/' );
 define( 'SMALL_SHOP__PLUGIN_CSS', SMALL_SHOP__PLUGIN_ASSETS . 'css/' );
-
 
 register_activation_hook( __FILE__, array( 'SMALL_SHOP', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'SMALL_SHOP', 'plugin_deactivation' ) );
 
-require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShopTranslation.php' );
-require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShopIcon.php' );
-require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShop.php' );
+require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/I18n.php' );
+require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/Icon.php' );
+
+// require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShop.php' );
 require_once( SMALL_SHOP__PLUGIN_API . 'SmallShopApi.php' );
 
-add_action( 'init', array( SmallShopTranslation::class, 'loadTranslation' ) );
-add_action( 'init', array( SmallShop::class, 'init' ) );
+add_action( 'init', array( I18n::class, 'loadTranslation' ) );
 add_action( 'rest_api_init', array( SmallShopAPI::class, 'init' ) );
+// add_action( 'init', array( SmallShop::class, 'init' ) );
 
 if ( is_admin() ) {
 	require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShopAdmin.php' );

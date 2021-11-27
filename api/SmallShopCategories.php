@@ -1,5 +1,7 @@
 <?php
 
+namespace API;
+
 require_once "InterfaceAPI.php";
 
 class SmallShopCategories implements API

@@ -1,8 +1,13 @@
 <?php
 
-class SmallShopTranslation 
+namespace Translation;
+
+class I18n 
 {
-    static function loadTranslation() {
+    private static $domain = SMALL_SHOP_TEXT_DOMAIN;
+
+    static function loadTranslation()
+    {
         $locale = apply_filters( 'plugin_locale', determine_locale(), SMALL_SHOP_TEXT_DOMAIN );
         $mofile = SMALL_SHOP_TEXT_DOMAIN . '-' . $locale . '.mo';
     
@@ -11,12 +16,17 @@ class SmallShopTranslation
             $locale = 'en_US';
             $mofile = SMALL_SHOP_TEXT_DOMAIN . '-' . $locale . '.mo';
         }
-    
+        
         load_textdomain( SMALL_SHOP_TEXT_DOMAIN, SMALL_SHOP__PLUGIN_LANGUAGES_DIR . $mofile );
     }
 
     public static function translate(string $text)
     {
         return __( $text, SMALL_SHOP_TEXT_DOMAIN );
+    }
+
+    public static function t(string $text)
+    {
+        return __( $text, self::$domain );
     }
 }

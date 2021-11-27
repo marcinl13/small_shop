@@ -1,8 +1,11 @@
 <?php
 
-class SmallShopTranslation 
+class I18n 
 {
-    static function loadTranslation() {
+    private static $domain = SMALL_SHOP_TEXT_DOMAIN;
+
+    static function loadTranslation()
+    {
         $locale = apply_filters( 'plugin_locale', determine_locale(), SMALL_SHOP_TEXT_DOMAIN );
         $mofile = SMALL_SHOP_TEXT_DOMAIN . '-' . $locale . '.mo';
     
@@ -18,5 +21,10 @@ class SmallShopTranslation
     public static function translate(string $text)
     {
         return __( $text, SMALL_SHOP_TEXT_DOMAIN );
+    }
+
+    public static function t(string $text): string
+    {
+        return __( $text, self::$domain );
     }
 }

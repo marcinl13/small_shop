@@ -1,7 +1,11 @@
 <?php
 
 // use SmallShop\API;
+namespace Admin;
 
+use I18n;
+use Icon\Icon;
+use Icon\IconSize;
 class SmallShopAdmin 
 {
     public static function init()
@@ -20,7 +24,7 @@ class SmallShopAdmin
     public static function admin_menu()
     {
         add_menu_page('Small Shop', 'Small Shop', 'manage_options', 'sm-shop', [__CLASS__,'endpoints']);
-        add_submenu_page('sm-shop', SmallShopTranslation::translate('Categories'), SmallShopTranslation::translate('Categories'), 'manage_options', 'sm-shop-categories', [__CLASS__, 'categories']);
+        add_submenu_page('sm-shop', I18n::translate('Categories'), I18n::translate('Categories'), 'manage_options', 'sm-shop-categories', [__CLASS__, 'categories']);
     }
 
     public function endpoints()

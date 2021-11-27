@@ -2,6 +2,8 @@
 use API\SmallShopCategories;
 use Icon\Icon;
 use Icon\IconSize;
+use Translation\I18n;
+
 ?>
 
 <div style="padding-right: 3rem; margin-top: 3rem">

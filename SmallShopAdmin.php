@@ -3,9 +3,10 @@
 // use SmallShop\API;
 namespace Admin;
 
-use I18n;
 use Icon\Icon;
 use Icon\IconSize;
+use Translation\I18n;
+
 class SmallShopAdmin 
 {
     public static function init()

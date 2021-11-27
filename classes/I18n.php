@@ -1,5 +1,7 @@
 <?php
 
+namespace Translation;
+
 class I18n 
 {
     private static $domain = SMALL_SHOP_TEXT_DOMAIN;
@@ -14,7 +16,7 @@ class I18n
             $locale = 'en_US';
             $mofile = SMALL_SHOP_TEXT_DOMAIN . '-' . $locale . '.mo';
         }
-    
+        
         load_textdomain( SMALL_SHOP_TEXT_DOMAIN, SMALL_SHOP__PLUGIN_LANGUAGES_DIR . $mofile );
     }
 
@@ -23,7 +25,7 @@ class I18n
         return __( $text, SMALL_SHOP_TEXT_DOMAIN );
     }
 
-    public static function t(string $text): string
+    public static function t(string $text)
     {
         return __( $text, self::$domain );
     }

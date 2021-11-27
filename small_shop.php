@@ -17,6 +17,7 @@ namespace SmallShop;
 
 use Admin\SmallShopAdmin;
 use API\SmallShopAPI;
+use Translation\I18n;
 
 // Make sure we don't expose any info if called directly
 if ( !function_exists( 'add_action' ) ) {

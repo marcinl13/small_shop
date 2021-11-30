@@ -2,6 +2,8 @@
 
 namespace API;
 
+use Core\Route;
+
 require_once "endpoints/Categories.php";
 require_once "endpoints/Products.php";
 
@@ -14,16 +16,18 @@ class Rest
 
     public static function init()
     {
-        if ( ! function_exists( 'register_rest_route' ) ) {
-            echo "register_rest_route";
-			// The REST API wasn't integrated into core until 4.4, and we support 4.0+ (for now).
+        if (!function_exists('register_rest_route')) {
 			return false;
 		}
 
-        $endpoint = new Categories();
-        $endpoint->register();
+        Route::get('/categoriesList', array(Categories::class, 'list'));
+        Route::post('/addCategory', array(Categories::class, 'add'));
+        Route::put('/updateCategory/(?P<id>\d+)', array(Categories::class, 'update'));
+        Route::delete('/deleteCategory', array(Categories::class, 'delete'));
 
-        $endpoint = new Products();
-        $endpoint->register();
+        Route::get('/productsList', array(Products::class, 'list'));
+        Route::post('/addProduct', array(Products::class, 'add'));
+        Route::put('/updateProduct/(?P<id>\d+)', array(Products::class, 'update'));
+        Route::delete('/deleteProduct', array(Products::class, 'delete'));
     }
 }

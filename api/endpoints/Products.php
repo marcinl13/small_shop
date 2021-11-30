@@ -13,49 +13,12 @@ class Products implements API
     public const ROUTE_DELETE = 'wp/v2/sm-shop/deleteProduct';
     public const ROUTE_UPDATE = 'wp/v2/sm-shop/updateProduct';
 
-    private $db;
+    public function __construct(){}
 
-    public function __construct()
+    public function list($request): \WP_REST_Response
     {
         global $wpdb;
 
-        $this->db = $wpdb;
-    }
-
-    // init hooks
-    public function register()
-    {
-        register_rest_route('wp/v2/sm-shop', '/productsList', array(
-            'methods' => 'GET',
-            'callback' => function($request) {
-                return $this->list($request);
-            } 
-        ), true );
-
-        register_rest_route('wp/v2/sm-shop', '/addProduct', array(
-            'methods' => 'POST',
-            'callback' => function($request) {
-                return $this->add($request);
-            } 
-        ), true );
-
-        register_rest_route('wp/v2/sm-shop', '/deleteProduct', array(
-            'methods' => 'DELETE',
-            'callback' => function($request) {
-               return $this->delete($request);
-            } 
-        ), true );
-        
-        register_rest_route('wp/v2/sm-shop', '/updateProduct/(?P<id>\d+)', array(
-            'methods' => 'PUT',
-            'callback' => function($request) {
-                return $this->update($request);
-            } 
-        ), true );
-    }
-
-    public function list(\WP_REST_Request $request): \WP_REST_Response
-    {
         $q = $request->get_param('q') ?? null;
         $limit = $request->get_param('perPage') ?? 5;
         $page = $request->get_param('page') ?? 1;
@@ -63,10 +26,10 @@ class Products implements API
         $whereQuery = "where p.name like '%" . $q . "%'";
 
         $sql = sprintf("select p.id, p.name, p.price, p.category_id, p.image from %s p %s;", self::TABLE, $whereQuery);
-        $total = count($this->db->get_results($sql));
+        $total = count($wpdb->get_results($sql));
 
         $sql = sprintf("select p.id, p.name, p.price, p.category_id, c.name as category_name, p.image from %s p left join small_shop_categories c on p.category_id = c.id %s limit %d, %d;", self::TABLE, $whereQuery, ($page - 1) * $limit, $limit);
-        $result = $this->db->get_results($sql);
+        $result = $wpdb->get_results($sql);
         $last = ceil($total/$limit);
         $last = $last > 0 ? $last : 1;
 
@@ -79,8 +42,10 @@ class Products implements API
     }
     
     // TODO: return message + refactor + translations
-    public function add(\WP_REST_Request $request): \WP_REST_Response
+    public function add($request): \WP_REST_Response
     {
+        global $wpdb;
+
         $params = $request->get_body();
         $params = json_decode($params, true);
 
@@ -99,15 +64,17 @@ class Products implements API
             'category_id' => $category_id,
             'image' => $image
         ];
-        $this->db->insert(self::TABLE, $data, ['%s']);
-        $insertID = $this->db->insert_id;
+        $wpdb->insert(self::TABLE, $data, ['%s']);
+        $insertID = $wpdb->insert_id;
 
         return new \WP_REST_Response($insertID, 201); 
     }
 
     // TODO: return message + refactor + translations
-    public function delete(\WP_REST_Request $request): \WP_REST_Response
+    public function delete($request): \WP_REST_Response
     {
+        global $wpdb;
+        
         $params = $request->get_body();
         $params = json_decode($params, true);
 
@@ -119,12 +86,14 @@ class Products implements API
 
         $data = ['id' => $id];
 
-        $deleted = $this->db->delete(self::TABLE, $data, ['%d']);
+        $deleted = $wpdb->delete(self::TABLE, $data, ['%d']);
     }
 
     // TODO: refactor + translations
-    public function update(\WP_REST_Request $request): \WP_REST_Response
+    public function update($request): \WP_REST_Response
     {
+        global $wpdb;
+        
         $id = $request->get_param('id') ?? null;
         if (!isset($id)) {
             return new \WP_REST_Response('no id provided', 500);
@@ -150,7 +119,7 @@ class Products implements API
         ];
         $where = ['id' => $id];
 
-        if($this->db->update(self::TABLE, $data, $where)){
+        if($wpdb->update(self::TABLE, $data, $where)){
             return new \WP_REST_Response(__CLASS__ .' updated', 200); 
         }
 

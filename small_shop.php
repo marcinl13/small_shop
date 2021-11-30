@@ -49,6 +49,7 @@ register_deactivation_hook( __FILE__, array( 'SMALL_SHOP', 'plugin_deactivation'
 
 require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/I18n.php' );
 require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/Icon.php' );
+require_once( SMALL_SHOP__PLUGIN_DIR . 'classes/Route.php' );
 
 // require_once( SMALL_SHOP__PLUGIN_DIR . 'SmallShop.php' );
 require_once( SMALL_SHOP__PLUGIN_API . 'API.php' );

@@ -12,50 +12,13 @@ class Categories implements API
     public const ROUTE_ADD = 'wp/v2/sm-shop/addCategory';
     public const ROUTE_DELETE = 'wp/v2/sm-shop/deleteCategory';
     public const ROUTE_UPDATE = 'wp/v2/sm-shop/updateCategory';
-
-    private $db;
-
-    public function __construct()
+    
+    public function __construct(){}
+    
+    public function list($request): \WP_REST_Response
     {
         global $wpdb;
-
-        $this->db = $wpdb;
-    }
-
-    // init hooks
-    public function register()
-    {
-        register_rest_route('wp/v2/sm-shop', '/categoriesList', array(
-            'methods' => 'GET',
-            'callback' => function($request) {
-                return $this->list($request);
-            } 
-        ), true );
-
-        register_rest_route('wp/v2/sm-shop', '/addCategory', array(
-            'methods' => 'POST',
-            'callback' => function($request) {
-                return $this->add($request);
-            } 
-        ), true );
-
-        register_rest_route('wp/v2/sm-shop', '/deleteCategory', array(
-            'methods' => 'DELETE',
-            'callback' => function($request) {
-               return $this->delete($request);
-            } 
-        ), true );
         
-        register_rest_route('wp/v2/sm-shop', '/updateCategory/(?P<id>\d+)', array(
-            'methods' => 'PUT',
-            'callback' => function($request) {
-                return $this->update($request);
-            } 
-        ), true );
-    }
-
-    public function list(\WP_REST_Request $request): \WP_REST_Response
-    {
         $q = $request->get_param('q') ?? null;
         $limit = $request->get_param('perPage') ?? 5;
         $page = $request->get_param('page') ?? 1;
@@ -63,10 +26,10 @@ class Categories implements API
         $whereQuery = "where name like '%" . $q . "%'";
 
         $sql = sprintf("select id, name from %s %s;", self::TABLE, $whereQuery);
-        $total = count($this->db->get_results($sql));
+        $total = sizeof($wpdb->get_results($sql));
 
         $sql = sprintf("select id, name from %s %s limit %d, %d;", self::TABLE, $whereQuery, ($page - 1) * $limit, $limit);
-        $result = $this->db->get_results($sql);
+        $result = $wpdb->get_results($sql);
         $last = ceil($total/$limit);
         $last = $last > 0 ? $last : 1;
 
@@ -79,8 +42,10 @@ class Categories implements API
     }
     
     // TODO: return message + refactor + translations
-    public function add(\WP_REST_Request $request): \WP_REST_Response
+    public function add($request): \WP_REST_Response
     {
+        global $wpdb;
+
         $params = $request->get_body();
         $params = json_decode($params, true);
 
@@ -91,15 +56,17 @@ class Categories implements API
         }
 
         $data = ['name' => $name];
-        $this->db->insert(self::TABLE, $data, ['%s']);
-        $insertID = $this->db->insert_id;
+        $wpdb->insert(self::TABLE, $data, ['%s']);
+        $insertID = $wpdb->insert_id;
 
         return new \WP_REST_Response($insertID, 201); 
     }
 
     // TODO: return message + refactor + translations
-    public function delete(\WP_REST_Request $request): \WP_REST_Response
+    public function delete($request): \WP_REST_Response
     {
+        global $wpdb;
+
         $params = $request->get_body();
         $params = json_decode($params, true);
 
@@ -111,12 +78,14 @@ class Categories implements API
 
         $data = ['id' => $id];
 
-        $deleted = $this->db->delete(self::TABLE, $data, ['%d']);
+        $deleted = $wpdb->delete(self::TABLE, $data, ['%d']);
     }
 
     // TODO: refactor + translations
-    public function update(\WP_REST_Request $request): \WP_REST_Response
+    public function update($request): \WP_REST_Response
     {
+        global $wpdb;
+
         $id = $request->get_param('id') ?? null;
         if (!isset($id)) {
             return new \WP_REST_Response('no id provided', 500);
@@ -133,7 +102,7 @@ class Categories implements API
         $data = ['name' => $name];
         $where = ['id' => $id];
 
-        if($this->db->update(self::TABLE, $data, $where)){
+        if($wpdb->update(self::TABLE, $data, $where)){
             return new \WP_REST_Response('updated', 200); 
         }
 

@@ -2,6 +2,8 @@
 
 namespace API;
 
+use Core\Pagination;
+
 require_once SMALL_SHOP__PLUGIN_API . "InterfaceAPI.php";
 
 class Products implements API
@@ -17,27 +19,21 @@ class Products implements API
 
     public function list($request): \WP_REST_Response
     {
-        global $wpdb;
-
-        $q = $request->get_param('q') ?? null;
+        $query = $request->get_param('q') ?? null;
         $limit = $request->get_param('perPage') ?? 5;
         $page = $request->get_param('page') ?? 1;
+       
+        $whereQuery = "where p.name like '%" . $query . "%'";
+        $newSQL =  sprintf("select p.id, p.name, p.price, p.category_id, c.name as category_name, p.image from %s p 
+                            left join small_shop_categories c on p.category_id = c.id %s", self::TABLE, $whereQuery);
 
-        $whereQuery = "where p.name like '%" . $q . "%'";
-
-        $sql = sprintf("select p.id, p.name, p.price, p.category_id, p.image from %s p %s;", self::TABLE, $whereQuery);
-        $total = count($wpdb->get_results($sql));
-
-        $sql = sprintf("select p.id, p.name, p.price, p.category_id, c.name as category_name, p.image from %s p left join small_shop_categories c on p.category_id = c.id %s limit %d, %d;", self::TABLE, $whereQuery, ($page - 1) * $limit, $limit);
-        $result = $wpdb->get_results($sql);
-        $last = ceil($total/$limit);
-        $last = $last > 0 ? $last : 1;
+        $pagination = Pagination::createFromQuery($newSQL, $page, $limit);
 
         return new \WP_REST_Response([
             'page' => (int) $page,
-            'last' => (int) $last,
-            'total' => (int) $total,
-            'result' => $result
+            'last' => $pagination->last,
+            'total' =>  $pagination->total,
+            'result' => $pagination->results
         ], 200);
     }
     

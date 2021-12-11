@@ -2,6 +2,9 @@
 
 namespace API;
 
+use Core\Pagination;
+use Error;
+
 require_once SMALL_SHOP__PLUGIN_API . "InterfaceAPI.php";
 
 class Categories implements API
@@ -17,27 +20,20 @@ class Categories implements API
     
     public function list($request): \WP_REST_Response
     {
-        global $wpdb;
-        
         $q = $request->get_param('q') ?? null;
         $limit = $request->get_param('perPage') ?? 5;
         $page = $request->get_param('page') ?? 1;
 
         $whereQuery = "where name like '%" . $q . "%'";
-
-        $sql = sprintf("select id, name from %s %s;", self::TABLE, $whereQuery);
-        $total = sizeof($wpdb->get_results($sql));
-
-        $sql = sprintf("select id, name from %s %s limit %d, %d;", self::TABLE, $whereQuery, ($page - 1) * $limit, $limit);
-        $result = $wpdb->get_results($sql);
-        $last = ceil($total/$limit);
-        $last = $last > 0 ? $last : 1;
+        $newSQL = sprintf("select id, name from %s %s", self::TABLE, $whereQuery);
+        
+        $pagination = Pagination::createFromQuery($newSQL, $page, $limit);
 
         return new \WP_REST_Response([
             'page' => (int) $page,
-            'last' => (int) $last,
-            'total' => (int) $total,
-            'result' => $result
+            'last' => $pagination->last,
+            'total' =>  $pagination->total,
+            'result' => $pagination->results
         ], 200);
     }
     
@@ -109,3 +105,5 @@ class Categories implements API
         return new \WP_REST_Response('oops something goeas wrong!!', 500); 
     }
 }
+
+

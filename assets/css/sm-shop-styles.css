@@ -65,7 +65,7 @@
 .sm-shop-table thead tr,
 .sm-shop-table tbody tr {
   display: grid;
-  grid-template-columns: 8fr 4fr;
+  grid-template-columns: 6fr 6fr;
 }
 
 .sm-shop-table thead th {
@@ -90,6 +90,33 @@
 
 .sm-shop-table tbody tr:nth-of-type(odd) {
   background-color: #ddd;
+}
+
+.sm-shop-table-categories thead tr,
+.sm-shop-table-categories tbody tr {
+  display: grid;
+  grid-template-columns: 8fr 4fr;
+}
+
+.sm-shop-table-products thead tr,
+.sm-shop-table-products tbody tr {
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr 2fr 4fr;
+}
+
+.sm-shop-table-products td {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.sm-shop-table-products td.text-bold {
+  font-weight: 700;
+}
+
+.sm-shop-center {
+  text-align: center;
 }
 
 .sm-shop-filters {
@@ -123,8 +150,4 @@
 
 .sm-shop-paginate span {
   margin: 0 0.25rem;
-}
-
-.sm-shop-center {
-  text-align: center;
 }

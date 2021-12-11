@@ -26,6 +26,7 @@ class SmallShopAdmin
     {
         add_menu_page('Small Shop', 'Small Shop', 'manage_options', 'sm-shop', [__CLASS__,'endpoints']);
         add_submenu_page('sm-shop', I18n::translate('Categories'), I18n::translate('Categories'), 'manage_options', 'sm-shop-categories', [__CLASS__, 'categories']);
+        add_submenu_page('sm-shop', I18n::translate('Products'), I18n::translate('Products'), 'manage_options', 'sm-shop-products', [__CLASS__, 'products']);
     }
 
     public function endpoints()
@@ -41,6 +42,16 @@ class SmallShopAdmin
     public function categories()
     {
         $template = SMALL_SHOP__PLUGIN_TEMPLATES_ADMIN . 'categoryList.php';
+
+        if( file_exists($template))
+        {
+            load_template($template);
+        }
+    } 
+    
+    public function products()
+    {
+        $template = SMALL_SHOP__PLUGIN_TEMPLATES_ADMIN . 'productsList.php';
 
         if( file_exists($template))
         {
